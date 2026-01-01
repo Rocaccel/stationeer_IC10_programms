@@ -1,0 +1,25 @@
+#control timecycle of fitolamps of GreenHouse
+##################  ##################
+define minutesOfLight 5 #set ON time in minutes
+define minutesOfDark 5 #set OFF time in minutes
+#################  #################
+define growLight -1758710260 #
+################  ################
+alias timer r15
+alias offTime r14
+alias totalTime r13
+############   ############
+mul offTime minutesOfLight 120 #     (2   )
+mul totalTime minutesOfDark 120 #    (   )
+add totalTime totalTime offTime #      .
+l timer db Setting #    ,
+##################  ####################
+start:
+yield
+add timer timer 1 #
+brle timer totalTime 2 #   ,    totalTime
+move timer 0 #
+s db Setting timer #
+slt r0 timer offTime # ,   ,  offTime
+sb growLight On r0 # /
+j start
