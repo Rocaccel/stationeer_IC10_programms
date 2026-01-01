@@ -1,0 +1,19 @@
+#control solar panel angle to keep max efectiveness
+alias Sens d0
+define Corect 180 #0 90 180 270 - set rigth angle if solar panel working unproper way
+Start:
+l r15 Sens Vertical
+l r14 Sens Horizontal
+
+add r14 r14 Corect
+sub r15 90 r15
+
+sb -2045627372 Vertical r15
+sb -539224550 Vertical r15
+sb -1545574413 Vertical r15
+sb -934345724 Vertical r15
+sb -2045627372 Horizontal r14
+sb -539224550 Horizontal r14
+sb -1545574413 Horizontal r14
+sb -934345724 Horizontal r14
+j Start
