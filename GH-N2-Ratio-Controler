@@ -1,0 +1,10 @@
+#control N2 ratio for GreenHouse
+alias GHFilterN2 d0
+alias GasSENSGH d1
+define N2 0.0121
+
+main:
+l r0 GasSENSGH RatioNitrogen
+sle r1 r0 N2
+s GHFilterN2 On r1
+j main
