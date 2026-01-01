@@ -1,0 +1,11 @@
+#for CO2 ratio controler of GreenHouse
+alias FilterCO2 d0
+alias GasSENSGH d1
+define CO2 0.012
+#s FilterCO2 Mode 1
+
+main:
+l r0 GasSENSGH RatioCarbonDioxide
+sle r1 r0 CO2
+s FilterCO2 On r1
+j main
