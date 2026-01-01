@@ -1,0 +1,47 @@
+alias pipein d0
+alias pipeout d1
+alias pump d2
+alias storage d3
+alias SetPressure r15
+define Elballon -668314371
+define R 8.31446261815324
+
+start:
+ls r0 storage 0 Occupied
+bgtz r0 check
+l r1 pipeout Pressure
+seqz r0 r0
+s pump Mode r0
+s pump Setting 200
+snez r1 r1
+and r0 r0 r1
+s pump On r0
+yield
+j start
+
+check:
+ls r0 storage 0 OccupantHash
+move SetPressure 19000 #Large
+beq r0 Elballon main
+move SetPressure 6000  #Small
+main:
+s pump Mode 0
+l r1 pipein Temperature
+l r2 pipein TotalMoles
+l r3 pipeout TotalMoles
+l r4 pipein Pressure
+#volume in
+mul r10 r2 R
+mul r10 r10 r1
+div r10 r10 r4
+#volume pump
+mul r5 SetPressure 200 #set pipe to storage
+mul r6 R r1
+div r0 r5 r6
+sub r0 r0 r3
+div r5 r10 r2
+mul r0 r0 r5
+s pump Setting r0
+yield
+s pump Setting 0
+j start
