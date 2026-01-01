@@ -1,0 +1,90 @@
+alias OcSens d0
+alias ExtD d1
+alias IntD d2
+alias ExtV d3
+alias IntV d4
+alias Sens d5
+alias Pres r15
+define LightTimer 5 #LightOffDelay
+define ActPause 0 #ActivateDelay
+define Sleep 5 #DelayAfterActivation
+define Light 1514476632
+define SetPresIn 0
+define SetPresOut 0
+s ExtD Mode 1
+s IntD Mode 1
+s ExtD Open 1
+s IntD Open 0
+move r5 0
+Start:
+s ExtD Setting 0
+s IntD Setting 0
+yield
+l Pres Sens Pressure
+l r14 OcSens Quantity
+snez r14 r14
+or r0 r14 r5
+breq r0 0 3
+add r5 r5 1
+mod r5 r5 LightTimer
+sb Light On r0
+l r13 ExtD Open
+l r12 IntD Open
+l r11 ExtD Setting
+l r10 IntD Setting
+or r1 r10 r11
+beq r1 1 Set
+beq r14 1 Set
+j Start
+
+Set:
+move r5 LightTimer
+sb Light On 1
+sleep ActPause
+beq r13 1 In
+beq r12 1 Out
+j Start
+
+In:
+s IntD Setting 0
+l Pres Sens Pressure
+s ExtD Open 0
+sgt r1 Pres 0
+yield
+s ExtV Mode 1
+s ExtV On r1
+bgt Pres 0 In
+l Pres Sens Pressure
+l r10 IntD Setting
+breq r10 1 5
+s IntV Mode 0
+s IntV On 1
+brlt Pres SetPresIn -5
+yield
+s IntV On 0
+yield
+s IntD Open 1
+sleep Sleep
+j Start
+
+Out:
+s ExtD Setting 0
+l Pres Sens Pressure
+s IntD Open 0
+sgt r1 Pres 0
+yield
+s IntV Mode 1
+s IntV On r1
+bgt Pres 0 Out
+l Pres Sens Pressure
+l r11 ExtD Setting
+breq r11 1 5
+s ExtV Mode 0
+s ExtV On 1
+brlt Pres SetPresOut -5
+yield
+s ExtV On 0
+yield
+s ExtD Open 1
+sleep Sleep
+j Start
