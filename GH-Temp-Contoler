@@ -1,0 +1,17 @@
+#control temperature of room in GreenHouse
+alias GasSensGH d0
+alias HeaterGH d1
+alias CoolerGH d2
+define MaxTemp 299 #Max temperature in Forenheits
+define MinTemp 298 #Min temperature in Forenheits
+
+main:
+l r0 GasSensGH Temperature
+slt r1 r0 MinTemp
+s HeaterGH On r1
+sgt r2 r0 MaxTemp
+s CoolerGH On r2
+yield
+yield
+yield
+j main
