@@ -1,0 +1,87 @@
+#= Hard Suit Automaton HiPr = v 1.2 == by swagman =#
+#  _  _ .Auto Light._   ___      _ _     Filter    #
+# | || |__ _ _ _ __| | / __|_  _(_) |_    AirRel   #
+# | __ / _` | '_/ _` | \__ \ || | |  _|    NaviSy  #
+# |_||_\__,_|_| \__,_| |___/\_,_|_|\__|  Automaton #
+#==================================================#
+# NormalMode:                                      #
+# * Auto light off timer - save battery power      #
+# * Helmet emergency close (P<20, T<>-10..50)      #
+# Free first filter slot to enable ExtendedMode:   #
+# + Filter control for ultra-long filters life     #
+# + AirRel control in hot atmos prevents o2 leak   #
+# + NaviSy uses TargetP to show distance to Home   #
+# Home - where IC10 was first inserted into suit   #
+# place filter in first slot for safe chip removal #
+define AutoLightOff 300 #set time to light off (.5s)
+#==================================================#
+# |-| _\"  /-\ |_| "|" () |\/| /-\ "|" () |\| - |_ #
+#= 2022.10.30 01:39  https://youtu.be/fHjzsR-N6DU =#
+alias Suit db
+alias Helm d0
+alias Back d1
+alias debug r13
+alias count r12
+alias lTime r11
+alias s4o r10
+alias LiEn r9
+alias ArEn r8
+alias FiEn r7
+alias PrIn r6
+alias RaOx r5
+alias PrSe r4
+alias PosX r3
+alias PosZ r2
+move lTime AutoLightOff
+l PosX Suit PositionX
+l PosZ Suit PositionZ
+s Suit Error 1 #beep-boop
+#.-~-.-~-.-~-.-~-.-~-.-~-.-~-.-~-.-~-.-~-.-~-.-~-.-
+loop:
+yield
+ls s4o Suit 4 Occupied
+l LiEn Helm On
+l PrIn Suit Pressure
+l RaOx Suit RatioOxygen
+#---light control section
+mul count count LiEn
+add count count LiEn
+sub r0 lTime count
+brgt r0 4 2
+s Helm On r0
+#---air & filter control section
+mul RaOx RaOx PrIn
+sle FiEn RaOx 22
+xor r0 FiEn 1
+s Suit On r0
+sle ArEn PrIn 560 #max 560
+#---NaviSy section
+l r1 Suit PositionX
+l r0 Suit PositionZ
+sub r1 r1 PosX
+mul r1 r1 r1
+sub r0 r0 PosZ
+mul r0 r0 r0
+add r0 r0 r1
+sqrt r0 r0
+add r0 r0 50 #-don't scare too low value
+select PrSe ArEn 999 r0
+#---select mode & use
+select PrSe s4o 50 PrSe
+select ArEn s4o 1 ArEn
+select FiEn s4o 1 FiEn
+s Suit PressureSetting PrSe
+s Suit AirRelease ArEn
+s Suit Filtration FiEn
+#---helm emergency close section
+l r0 Helm Open
+beq r0 0 loop
+l r0 Suit PressureExternal
+brgt r0 20 2 # 20 kPa
+s Helm Open 0
+l r0 Suit TemperatureExternal
+brlt r0 263.15 2 #-10C
+brlt r0 323.15 2 # 50C
+s Helm Open 0
+j loop
+#.-~-.-~-.-~-.-~-.-~-.-~-.-~-.-~-.-~-.   \-(o)-(o)-/
