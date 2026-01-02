@@ -1,0 +1,33 @@
+alias GasAnal d0
+alias Pump d1
+alias Storage d2
+define Press 2000
+
+test:
+ls r5 Storage 0 Quantity 
+bnez r5 main 
+j test
+
+main:
+l r0 GasAnal Pressure
+blt r0 Press calc
+bgt r0 Press pumpoff
+
+j main
+
+pumpon:
+s Pump Lock 0
+s Pump Mode 0
+s Pump On 1
+j test 
+
+pumpoff:
+s Pump On 0
+s Pump Lock 1
+j test 
+
+calc:
+sub r10 Press r0
+div r11 r10 200
+s Pump Setting r11
+j pumpon
