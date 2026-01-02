@@ -1,0 +1,24 @@
+alias Printer d0
+alias Stacker d1
+alias LED1 d2
+alias LED2 d3
+s d2 Color 0
+s d3 Color 4
+
+main:
+yield
+l r0 Printer On
+s Stacker On r0
+s LED1 On r0
+s LED2 On r0
+l r0 Stacker Setting
+s LED1 Setting r0
+l r1 Printer ExportCount
+s LED2 Setting r1
+l r2 Printer Activate
+select r2 r2 r0 r1
+sne r2 r2 r1
+s Printer Activate r2
+seqz r2 r2
+s Printer ClearMemory r2
+j main 
