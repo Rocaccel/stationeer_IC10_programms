@@ -1,0 +1,37 @@
+alias TankH2 d0
+alias TankO2 d1
+alias GasMixer d2
+alias Lever d3
+alias t1 r0
+alias t2 r1
+alias n r2
+move n 66 #Set Ratio H2 (Input 1)
+s GasMixer Lock 1
+
+loop:
+l r5 TankH2 Pressure
+blez r5 Off
+l r5 TankO2 Pressure
+blez r5 Off
+l r5 TankH2 Temperature
+bge r5 318 Off
+l r5 TankO2 Temperature
+bge r5 318 Off
+yield
+l r10 Lever Open
+s GasMixer On r10
+l t1 TankH2 Temperature
+l t2 TankO2 Temperature
+mul r3 n t1
+sub r4 100 n
+mul r4 r4 t2
+add r4 r3 r4
+div r3 r3 r4
+mul r3 r3 100
+s GasMixer Setting r3 
+j loop
+
+Off:
+s Lever Open 0
+s GasMixer On 0
+j loop 
