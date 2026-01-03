@@ -1,0 +1,22 @@
+alias emkost d0
+alias zaryad d1
+alias rashod d2
+alias procent d3
+s d0 Color 0
+s d0 Mode 2
+s d1 Color 2
+s d1 Mode 2
+s d2 Color 4
+s d2 Mode 2
+s d3 Color 6
+s d3 Mode 1
+job:
+lb r0 -1388288459 Charge Sum
+s d0 Setting r0
+lb r1 -1388288459 PowerPotential Average
+s d1 Setting r1
+lb r2 -1388288459 PowerActual Average
+s d2 Setting r2
+lb r3 -1388288459 Ratio Average
+s d3 Setting r3
+j job
