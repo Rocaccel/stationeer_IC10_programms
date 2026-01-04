@@ -1,0 +1,43 @@
+# A simple ArcFurnace control ##########
+# The state of occupancy is read and the furnace is
+#  turned on when the input slot is occupied.
+########################################
+# config #
+alias arcFurnace d0
+#alias centrifuge d1
+alias furanceOccupience r0
+#alias centrifugeOccupience r1
+# program #
+main:
+# loads occupience state of furnance
+ls furanceOccupience arcFurnace 0 Occupied
+# loads occupience state of furnance
+#ls centrifugeOccupience centrifuge 0 ImportCount
+
+# if occupience = 1 ==> it's occupied! => burn it!
+beqal furanceOccupience 1 turnFurnaceOn
+beqal furanceOccupience 0 turnFurnaceOff
+# if occupience = 1 ==> it's occupied! => centrifuge it!
+#bgezal centrifugeOccupience 1 turnCentrifugeOn
+#beqal centrifugeOccupience 0 turnCentrifugeOff
+# else
+j main
+
+
+turnFurnaceOn:
+s arcFurnace On 1
+s arcFurnace Activate 1
+j ra
+
+turnFurnaceOff:
+s arcFurnace On 0
+j ra
+
+#turnCentrifugeOn:
+#s centrifuge On 1
+#s centrifuge Activate 1
+#j ra
+
+#turnCentrifugeOff:
+#s centrifuge On 0
+#j ra
