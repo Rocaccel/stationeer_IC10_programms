@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<InstructionData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <DateTime>133410537627318860</DateTime>
+  <GameVersion>0.2.4297.19997</GameVersion>
+  <Title>Clock IC</Title>
+  <Description>​</Description>
+  <Author>Hagyno</Author>
+  <WorkshopFileHandle></WorkshopFileHandle>
+  <Instructions>alias Sensor d0 # Day Sensor instaled to 180
+alias Display d1 #  LED display
+
+alias variable r0
+alias hour r1
+
+main:
+l variable Sensor Horizontal
+add variable variable 180
+div variable variable 15
+trunc hour variable
+mod variable variable 1
+mul variable variable 60
+trunc variable variable
+div variable variable 100
+add variable variable hour
+s Display Setting variable
+yield
+j main</Instructions>
+</InstructionData>
