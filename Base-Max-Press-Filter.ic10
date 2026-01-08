@@ -1,0 +1,14 @@
+alias gasSensor d0 #to Gas sensor at the base
+alias analiz d1 #to gas analizator bettwen O2 tank and filter mashine
+alias filterO2 d2 #to filter mashine with O2 filters installed
+define pressLimit 90 # set MAX pressure in the base
+define canPressLimit 19000 # set MAX pressure in the O2 tank or canister
+
+main:
+l r0 gasSensor Pressure
+sgt r1 r0 pressLimit
+l r3 analiz Pressure 
+slt r2 r3 canPressLimit 
+and r4 r1 r2
+s filterO2 On r4
+j main
