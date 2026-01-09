@@ -1,0 +1,32 @@
+alias filtr d0 #to filter e.q. CO2
+alias ledfiltr1 d1 #to wear indicator of 1st filtercan
+alias ledfiltr2 d2 #to wear indicator of 2st filtercan
+alias gasAnal d3 #to gas analizator
+alias reg d4 #to pressure regulator to fill canister
+alias storage d5 #to canister assembly
+s ledfiltr1 Color 6
+s ledfiltr2 Color 6
+s ledfiltr1 Mode 1
+s ledfiltr2 Mode 1
+
+main:
+l r4 gasAnal RatioVolatiles
+ls r5 filtr 0 Quantity
+ls r6 filtr 1 Quantity
+div r5 r5 100
+div r6 r6 100
+add r7 r5 r6
+s ledfiltr1 Setting r5
+s ledfiltr2 Setting r6
+sgtz r4 r4
+sgtz r7 r7
+and r4 r4 r7
+s filtr On r4
+
+l r10 reg Setting
+l r11 storage Pressure
+ls r12 storage 0 Occupied
+sna r11 r11 r10 0.05
+and r11 r11 r12
+s reg On r11
+j main
