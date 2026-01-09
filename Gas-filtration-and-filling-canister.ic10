@@ -3,6 +3,7 @@ alias ledfiltr1 d1 #to wear indicator of 1st filtercan
 alias ledfiltr2 d2 #to wear indicator of 2st filtercan
 alias gasAnal d3 #to gas analizator
 alias reg d4 #to pressure regulator to fill canister
+# the pressure in the canister sets at pressure regulator by flywheel
 alias storage d5 #to canister assembly
 s ledfiltr1 Color 6
 s ledfiltr2 Color 6
