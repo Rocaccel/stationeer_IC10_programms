@@ -1,6 +1,6 @@
 #control work of coal generator to keep batteres charge between 20-30%%
 alias CoalGen d1
-define Batt -1388288459
+define Batt -1388288459 # Все БОЛЬШИЕ БАТАРЕИ
 define MaxBatt 0.30
 define MinBatt 0.20
 define ChargeBatt 2
