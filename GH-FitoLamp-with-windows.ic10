@@ -1,3 +1,4 @@
+#требует установки датчика солнца
 define Grow HASH("StructureGrowLight")
 define DSens HASH("StructureDaylightSensor")
 Start:
