@@ -1,0 +1,17 @@
+alias centr1 d1
+#alias centr2 d2
+#alias centr3 d3
+define max 401
+
+main:
+s centr1 On 1
+s centr1 Open 0
+l r1 centr1 Reagents
+beq r1 max opencentr
+j main
+
+opencentr:
+s centr1 On 0
+s centr1 Open 1
+brna r1 0 0.05 -1
+j opencentr
