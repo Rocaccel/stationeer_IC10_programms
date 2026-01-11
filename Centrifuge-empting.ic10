@@ -1,17 +1,18 @@
-alias centr1 d1
-#alias centr2 d2
-#alias centr3 d3
+define Centrif 690945935
 define max 401
 
 main:
-s centr1 On 1
-s centr1 Open 0
-l r1 centr1 Reagents
+sb Centrif On 1
+sb Centrif Open 0
+lb r1 Centrif Reagents Maximum 
 beq r1 max opencentr
+yield
 j main
 
 opencentr:
-s centr1 On 0
-s centr1 Open 1
-brna r1 0 0.05 -1
-j opencentr
+sb Centrif On 0
+sb Centrif Open 1
+lb r1 Centrif Reagents Maximum
+yield
+brgt r1 2  -2
+j main
