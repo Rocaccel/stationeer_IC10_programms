@@ -1,0 +1,29 @@
+alias MeteoStation d0
+alias disp d1
+alias migalka d2
+alias speaker d3
+define MinTime 1
+define MaxTime 150
+define Fullvol 30
+s d3 Mode 7
+job:
+l r0 d0 NextWeatherEventTime
+s d1 Setting r0
+sgt r1 r0 MinTime
+s d2 On r1
+slt r2 r0 MaxTime
+snez r1 r0
+and r0 r1 r2
+s d3 On r0
+l r0 d0 NextWeatherEventTime
+blt r0 MaxTime pass
+j job
+pass:
+l r2 d0 NextWeatherEventTime
+sub r3 MaxTime Fullvol   # 120
+div r4 r3 100            #1.2
+sub r5 MaxTime r2      # x time
+div r6 r5 r4             # % time off
+add r7 1 r6            # % job speaker
+s d3 Volume r7
+j job
