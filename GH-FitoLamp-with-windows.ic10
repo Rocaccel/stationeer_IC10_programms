@@ -1,0 +1,11 @@
+define Grow HASH("StructureGrowLight")
+define DSens HASH("StructureDaylightSensor")
+Start:
+yield
+lbn r12 DSens HASH("DSens") Activate 0
+select r15 r12 0 r15
+add r15 r15 1
+sgt r0 r15 600 #столько тиков после захода солца фитолампа НЕ будет гореть - примерно 1 тик= 0,5 секунды
+or r0 r0 r12
+sb Grow On r0
+j Start
