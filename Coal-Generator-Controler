@@ -1,12 +1,12 @@
-#contol work of coal generator to keep battery charge between 20-30%%
-alias Batt d0
+#control work of coal generator to keep batteres charge between 20-30%%
 alias CoalGen d1
+define Batt -1388288459
 define MaxBatt 0.30
 define MinBatt 0.20
 define ChargeBatt 2
 
 main:
-l r0 Batt Mode
+lb r0 Batt Mode Average
 sle r1 r0 ChargeBatt
 s CoalGen On r1
 j main
