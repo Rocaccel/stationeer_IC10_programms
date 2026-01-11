@@ -1,0 +1,8 @@
+define GrowLight HASH("StructureGrowLight")
+Start:
+yield
+add r15 r15 1
+slt r0 r15 900 #выключен свет
+sb GrowLight On r0
+mod r15 r15 1200 #весь цикл таймера = свет+тьма
+j Start
