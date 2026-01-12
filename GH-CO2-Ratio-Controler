@@ -1,11 +1,13 @@
-#for CO2 ratio controler of GreenHouse
-alias FilterCO2 d0
-alias GasSENSGH d1
-define CO2 0.012
-#s FilterCO2 Mode 1
+#for CO2 ratio controler of GreenHouse for endless count of filters with name "FilterCO2"
+alias gasSensor d0
+define filtersCO2 -348054045
 
 main:
-l r0 GasSENSGH RatioCarbonDioxide
-sle r1 r0 CO2
-s FilterCO2 On r1
+l r0 gasSensor RatioCarbonDioxide
+blt r0 0.05 turnON # to set desired ammount of % CO2
+sbn filtersCO2  HASH("FilterCO2") On 0
+j main
+
+turnON:
+sbn filtersCO2  HASH("FilterCO2") On 1
 j main
