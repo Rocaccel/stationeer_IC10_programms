@@ -1,0 +1,17 @@
+alias led1 d0
+alias led2 d1
+s led1 On 1
+s led2 On 1
+s db Setting 100
+
+main:
+l r0 db RatioPollutantInput
+sgtz r1 r0
+s db Mode r1
+ls r2 db 0 Quantity
+ls r3 db 1 Quantity
+div r2 r2 100
+div r3 r3 100
+s led1 Setting r2
+s led2 Setting r3
+j main
