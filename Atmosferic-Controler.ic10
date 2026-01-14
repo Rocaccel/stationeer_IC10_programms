@@ -1,4 +1,4 @@
-alias gasSens d0
+#alias gasSens d0
 alias led d1
 define vent -1129453144
 define reg 554524804
@@ -26,9 +26,9 @@ sbn reg HASH("RegO2") Mode 101
 
 
 main:
-l r0 gasSens RatioCarbonDioxide
-l r1 gasSens RatioNitrogen
-l r2 gasSens RatioOxygen
+lb r0 sens RatioCarbonDioxide Average
+lb r1 sens RatioNitrogen Average
+lb r2 sens RatioOxygen Average
 lb r13 sens Pressure Average
 s led Setting r13
 
