@@ -13,5 +13,5 @@ define ChargeBatt 2 # Minimum battery charge percentage to start the generator "
 main:
 lb r0 Batt Mode Average
 sle r1 r0 ChargeBatt
-s CoalGen On r1
+s coalGen On r1
 j main
