@@ -1,5 +1,5 @@
 #control work of coal generator to keep batteres charge between 10-25%%
-define coalGen 813146305 # Coal generator
+alias coalGen d0
 #define Batt -1388288459 # All LARGE BATTERIES
 define Batt -400115994 # All SMALL BATTERIES
 define ChargeBatt 2 # Minimum battery charge percentage to start the generator "2 = 10% - 25%"
