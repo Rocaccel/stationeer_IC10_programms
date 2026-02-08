@@ -1,0 +1,19 @@
+# Managing the printer and its stacker. 
+# The stacker turns on and off with printer. If the printer is turned off and the stacker is occupied, the stacker will be unloaded before turning it on again.
+alias printer d0
+alias staker d1
+
+main:
+l r0 printer On # Checking if the printer is turned on
+ls r1 staker 2 Occupied # Checking if the stacker is occupied
+seqz r3 r0 # If the printer is turned off, r3 will be 1, otherwise 0
+and r4 r3 r1 # If the printer is turned off and the stacker is occupied, r4 will be 1, otherwise 0
+bnez r4 unload # If the printer is turned off and the stacker is occupied, go to the unload line
+s staker On r0 # Turn on the printer stacker if it is turned on or turn it off if it is turned off
+j main 
+
+unload: # Unload the stacker if the printer is turned off and the stacker is busy
+s staker On 1 # Turn on the stacker to unload it
+s staker Activate 1 # Activate the stacker for unloading
+s staker On r0 # Turn off the stacker after unloading
+j main
