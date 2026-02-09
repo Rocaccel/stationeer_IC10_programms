@@ -1,0 +1,18 @@
+# Control work of coal generator to keep batteres charge in UPS near 10%
+# Uses at least 20 batteries per UPS to fully utilize the generator's potential. 
+# Each UPS consumes 1KW, the generator produces 20KW, which means 20 UPS can fully utilize the generator. 
+# Otherwise, the charge is wasted.
+alias coalGen d0
+define ups -1032513487 # All UPS
+define upsZ 1999523701 # All Mirror UPS
+define ChargeBatt 0.1 # Minimum battery charge percentage to start the generator - 10%
+main:
+sb ups On 1
+sb upsZ On 1
+lb r0 ups Ratio Average
+lb r1 upsZ Ratio Average
+add r2 r0 r1 
+div r2 r2 2
+sle r3 r2 ChargeBatt
+s coalGen On r3
+j main
