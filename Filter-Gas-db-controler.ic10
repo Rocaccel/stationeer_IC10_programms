@@ -1,0 +1,18 @@
+# This code controls the gas filter and shows the wear level of the filters on the two LED shutter lamps
+alias filter db # Gas filter
+alias led1 d0 # LED for the first filter
+alias led2 d1 # LED for second filter
+s led1 On 1
+s led2 On 1
+
+main:
+l r0 filter RatioPollutantInput # get the pollution value (change it to the desired gas)
+sgtz r1 r0
+s filter Mode r1
+ls r2 filter 0 Quantity
+ls r3 filter 1 Quantity
+div r2 r2 100
+div r3 r3 100
+s led1 Setting r2
+s led2 Setting r3
+j main
