@@ -1,0 +1,18 @@
+# Advanced Furnace Simple Press Controller
+# Uses already hot gas (1500K) from the tank.
+# Controls the pressure in the furnace, maintaining it at the level set by the user on the regulator
+# The regulator set 275 = 27.5 MPa in the oven
+alias furnace d0
+alias pressDial d1
+
+main:
+l r0 furnace Pressure
+l r10 pressDial Setting
+mul r10 r10 100
+sub r2 r10 r0
+div r2 r2 10
+s furnace SettingInput r2
+sub r3 r0 r10
+div r3 r3 10
+s furnace SettingOutput r3
+j main
